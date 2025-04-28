@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Director Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+    <div class="dashboard">
+
+        {% include "sidebar.html" %}
+        <!-- Sidebar -->
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <div class="header">
+                <div class="search-container">
+                    <i class="lucide-search"></i>
+                    <input type="text" placeholder="Search for anything..." />
+                </div>
+
+                <div class="header-actions">
+                    <button class="header-icon-button">
+                        <i class="lucide-calendar"></i>
+                    </button>
+                    <button class="header-icon-button">
+                        <i class="lucide-message-square"></i>
+                    </button>
+                    <button class="header-icon-button">
+                        <i class="lucide-bell"></i>
+                    </button>
+
+                    <div class="user-profile">
+                        <div class="user-info">
+                            <span class="user-name">{{ office }}</span>
+                            <span class="user-role">DCS Director</span>
+                        </div>
+                        <div class="user-avatar">
+                            <img src="https://ui-avatars.com/api/?name=Odegbami+Ahmed&background=9333EA&color=fff"
+                                alt="User" />
+                            <i class="lucide-chevron-down"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Welcome Banner -->
+            <div class="banner">
+                <div class="banner-content">
+                    <h1 class="general-header-text">Welcome, {{ username }}</h1>
+                    <p class="general-small-text">You have <span id="pending-count">3</span> Pending Document, lets see
+                        what you can do today!</p>
+                    <button class="check-now-btn">Check Now</button>
+                </div>
+                <div class="banner-image">
+                    <img src="{{ url_for('static', filename='images/welcome banner picture.png') }}"
+                        alt="Professional in suit">
+                </div>
+            </div>
+
+            <!-- Dashboard Content -->
+            <div class="dashboard-content">
+                <!-- Status Cards -->
+                <div class="status-cards">
+                    <div class="status-card">
+                        <div class="status-info">
+                            <div class="status-title">Total Document</div>
+                            <div class="status-count">550</div>
+                        </div>
+                        <div class="status-icon blue">
+                            <i class="lucide-users"></i>
+                        </div>
+                    </div>
+
+                    <div class="status-card">
+                        <div class="status-info">
+                            <div class="status-title">Treated</div>
+                            <div class="status-count">525</div>
+                        </div>
+                        <div class="status-icon amber">
+                            <i class="lucide-check-circle"></i>
+                        </div>
+                    </div>
+
+                    <div class="status-card">
+                        <div class="status-info">
+                            <div class="status-title">Not Treated</div>
+                            <div class="status-count">20</div>
+                        </div>
+                        <div class="status-icon orange">
+                            <i class="lucide-x-circle"></i>
+                        </div>
+                    </div>
+
+                    <div class="status-card">
+                        <div class="status-info">
+                            <div class="status-title">Pending</div>
+                            <div class="status-count">5</div>
+                        </div>
+                        <div class="status-icon purple">
+                            <i class="lucide-clock"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Documents Table -->
+                <div class="documents-table-container">
+                    <div class="table-container">
+                        <div class="table-header">
+                            Recent Document
+                        </div>
+                        <div class="table-responsive">
+                            <table class="documents-table">
+                                <thead>
+                                    <tr>
+                                        <th><input type="checkbox" class="checkbox-all" /></th>
+                                        <th>Reference Number</th>
+                                        <th>Subject</th>
+                                        <th>From</th>
+                                        <th>Priority</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="documents-table-body">
+                                    <!-- Table rows will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
+    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Development version -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+    <!-- Production version -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+</body>
+
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css')}}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
+</head>
+
+<body>
+    <div class="background-login">
+        <div class="container-login">
+            <div class="logo-login">
+                <img src="{{ url_for('static', filename='images/Logo.png') }}" alt="DCS Logo">
+            </div>
+            <div class="login-card">
+                <h1 class="login-tag">Continue Where You Left Off...</h1>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="email">Official Email</label>
+                        <input type="email" id="email" name="email" placeholder="name@dsa.mil.ng" required>
+                        <div class="error" id="emailError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="password-input">
+                            <input type="password" id="password" name="password" required>
+                            <button type="button" class="toggle-password" aria-label="Toggle password visibility">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path
+                                        d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24">
+                                    </path>
+                                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="error" id="passwordError"></div>
+                        <div class="password-actions">
+                            <span></span>
+                            <a href="#" class="forgot-password">forgot password?</a>
+                        </div>
+                    </div>
+                    <button type="submit" class="login-btn">Log in</button>
+                </form>
+                <p class="signup-prompt">
+                    Don't have an account? <a href="#" class="signup-link">Sign up</a>
+                </p>
+            </div>
+            <footer class="login-footer">
+                <p>© 2025 DCS Software Team</p>
+            </footer>
+        </div>
+    </div>
+    <script src="main.js"></script>
+</body>
+
+</html>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const loginForm = document.querySelector('#loginForm');
+
+        loginForm.addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevent default form submit
+
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value.trim();
+
+            let isValid = true;
+
+            if (!email) {
+                document.getElementById('emailError').textContent = "Official Email cannot be empty";
+                isValid = false;
+            }
+            if (!password) {
+                document.getElementById('passwordError').textContent = "Password cannot be empty";
+                isValid = false;
+            }
+
+            if (!isValid) return;
+
+            fetch("/submit_login", {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        sessionStorage.setItem("email", email);
+
+                        // Redirect to appropriate dashboard
+                        if (data.role === 'director') {
+                            window.location.href = "/director";
+                        } else if (data.role === 'registry') {
+                            window.location.href = "/registry";
+                        } else if (data.role === 'officer') {
+                            window.location.href = "/officer";
+                        } else {
+                            alert("Unauthorized role");
+                        }
+                    } else {
+                        document.getElementById("passwordError").textContent = data.error;
+                    }
+                })
+                .catch(error => {
+                    console.error("Login error:", error);
+                    document.getElementById("passwordError").textContent = "Something went wrong!";
+                });
+        });
+    });
+</script>

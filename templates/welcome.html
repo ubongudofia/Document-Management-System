@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css')}}">
+</head>
+
+<body>
+    <div class="background-welcome">
+        <div class="container-welcome">
+            <div class="welcome-card">
+                <h1 class="welcome-tag">Welcome!!!</h1>
+                <div class="welcome-logo">
+                    <img src="{{ url_for('static', filename='images/Logo.png') }}" alt="DCS Logo">
+                </div>
+                <a href="login">
+                    <button class="continue-btn">Continue</button>
+                </a>
+            </div>
+            <footer class="welcome-footer">
+                <p>© 2025 DCS Software Team</p>
+            </footer>
+        </div>
+
+    </div>
+</body>
+
+</html>
+
+
+<script>
+
+
+    // document.addEventListener('DOMContentLoaded', function() {
+    //     const continueBtn = document.querySelector('.continue-btn');
+
+    //     if (continueBtn) {
+    //         continueBtn.addEventListener('click', function() {
+    //             window.open ('/login.html')
+    //             console.log("Continue Button Clicked")
+
+    //         });
+    //     }
+    // });
+
+
+</script>

@@ -1,0 +1,90 @@
+<!-- Sidebar -->
+<div class="sidebar">
+    <div class="sidebar-header">
+        <div class="logo">
+            <div class="logo-img">
+                <img src="{{ url_for('static', filename='images/dsa-logo.png') }}" alt="Logo" />
+            </div>
+            <div class="logo-text">
+                <div class="logo-text-red">Directorate of</div>
+                <div class="logo-text-blue">Communications</div>
+                <div class="logo-text-blue">Satellite</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FIXED: Sidebar content wrapper moved outside -->
+    <div class="sidebar-content">
+        {% if role == "director" %}
+        <div class="sidebar-item active">
+            <i data-lucide="layout-dashboard" style="padding-right: 5px;"></i>
+            <span>Dashboard</span>
+        </div>
+        <div class="sidebar-item" data-page="/documents_content">
+            <i data-lucide="file-text" style="padding-right: 5px;"></i>
+            <span>All Document</span>
+        </div>
+
+        <div class="sidebar-item" data-page="/assigned_documents_content">
+            <i data-lucide="file-stack" style="padding-right: 5px;"></i>
+            <span>Assigned Document</span>
+        </div>
+
+        {% elif role == "registry" %}
+        <div class="sidebar-item active">
+            <i data-lucide="layout-dashboard" style="padding-right: 5px;"></i>
+            <span>Dashboard</span>
+        </div>
+
+        <div class="sidebar-item">
+            <i data-lucide="file-text" style="padding-right: 5px;"></i>
+            <span>All Document</span>
+        </div>
+        <div class="sidebar-item">
+            <i data-lucide="file-stack" style="padding-right: 5px;"></i>
+            <span>Document Category</span>
+        </div>
+        <div class="sidebar-item">
+            <i data-lucide="file-stack" style="padding-right: 5px;"></i>
+            <span>Assigned Document</span>
+        </div>
+
+        {% elif role == "officer" %}
+        <div class="sidebar-item active">
+            <i data-lucide="layout-dashboard" style="padding-right: 5px;"></i>
+            <span>Dashboard</span>
+        </div>
+        <div class="sidebar-item">
+            <i data-lucide="file-text" style="padding-right: 5px;"></i>
+            <span>All Document</span>
+        </div>
+        <div class="sidebar-item">
+            <i data-lucide="file-stack" style="padding-right: 5px;"></i>
+            <span>Assigned Document</span>
+        </div>
+        {% endif %}
+
+        <!-- COMMON MENUS -->
+        <div class="sidebar-divider"></div>
+        <div class="sidebar-group-label">MANAGE</div>
+        <div class="sidebar-item">
+            <i data-lucide="bell-dot" style="padding-right: 5px;"></i>
+            <span>Notification</span>
+        </div>
+        <div class="sidebar-item">
+            <i data-lucide="message-circle-question" style="padding-right: 5px;"></i>
+            <span>Support</span>
+        </div>
+        <div class="sidebar-item">
+            <i data-lucide="settings" style="padding-right: 5px;"></i>
+            <span>Settings</span>
+        </div>
+        <div class="sidebar-divider"></div>
+        <div class="sidebar-item">
+            <i data-lucide="log-out" style="padding-right: 5px;"></i>
+            <span>Logout</span>
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='main.js') }}"></script>

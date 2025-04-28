@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    <div class="dashboard">
+
+        <!-- Main Content -->
+        <div class="main-content">
+
+            <!-- Welcome Banner -->
+            <div class="reg_doc_container">
+                <header class="reg_doc_header">
+                    <h1 class="reg_doc_h1">Documents</h1>
+                    <button class="add-document-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M12 5v14m-7-7h14"></path>
+                        </svg>
+                        Add Document
+                    </button>
+                </header>
+
+                <div class="reg_doc_search-section">
+                    <div class="reg_doc_search-container">
+                        <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.3-4.3"></path>
+                        </svg>
+                        <input type="text" placeholder="Search all Document" class="reg_doc_search-input">
+                    </div>
+                    <button class="filter-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                        </svg>
+                        Filter
+                    </button>
+                </div>
+            </div>
+
+            <!-- Dashboard Content -->
+            <div class="dashboard-content">
+
+                <!-- Documents Table -->
+                <div class="documents-table-container">
+                    <div class="table-container">
+                        <div class="table-header">All Document</div>
+                        <div class="table-responsive">
+                            <table class="documents-table">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <input type="checkbox" class="checkbox-all">
+                                        </th>
+                                        <th>Reference Number</th>
+                                        <th>Subject</th>
+                                        <th>Memo Title</th>
+                                        <th>From</th>
+                                        <th>Minuted to</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                        <th>Priority</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="documents-table-body">
+                                    <!-- Table content will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    </div>
+    <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
+    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Development version -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+    <!-- Production version -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="script.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Sample data for documents
+    const documents = [
+        {
+            id: '1',
+            referenceNumber: 'DSA/J6/DCS/11/1/A',
+            subject: 'NA MATTERS',
+            memoTitle: 'REQUEST FOR DECORATION OF ARMY OFFICERS',
+            from: 'DOA',
+            minutedTo: 'Director',
+            date: '10-04-2025 | 10:30',
+            status: 'Pending',
+            priority: 'High'
+        },
+        {
+            id: '2',
+            referenceNumber: 'DSA/J6/DCS/11/2/A',
+            subject: 'NN MATTERS',
+            memoTitle: 'REQUEST FOR DECORATION OF NAVY OFFICERS',
+            from: 'DOA',
+            minutedTo: 'Director',
+            date: '10-04-2025 | 10:30',
+            status: 'Reviewed',
+            priority: 'Medium'
+        },
+        {
+            id: '3',
+            referenceNumber: 'DSA/J6/DCS/11/3/A',
+            subject: 'NAF MATTERS',
+            memoTitle: 'REQUEST FOR DECORATION OF AIR FORCE OFFICERS',
+            from: 'DOA',
+            minutedTo: 'Director',
+            date: '10-04-2025 | 10:30',
+            status: 'Pending',
+            priority: 'Low'
+        }
+    ];
+
+    // Function to render the documents table
+    function renderDocumentsTable() {
+        const tableBody = document.getElementById('documents-table-body');
+        tableBody.innerHTML = '';
+
+        documents.forEach(doc => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>
+                    <input type="checkbox" class="checkbox-row">
+                </td>
+                <td>${doc.referenceNumber}</td>
+                <td>${doc.subject}</td>
+                <td>${doc.memoTitle}</td>
+                <td>${doc.from}</td>
+                <td>${doc.minutedTo}</td>
+                <td>${doc.date}</td>
+                <td>
+                    <span class="badge badge-${doc.status.toLowerCase()}">${doc.status}</span>
+                </td>
+                <td>
+                    <span class="badge badge-${doc.priority.toLowerCase()}">${doc.priority}</span>
+                </td>
+                <td>
+                    <button class="actions-button">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="1"></circle>
+                            <circle cx="12" cy="5" r="1"></circle>
+                            <circle cx="12" cy="19" r="1"></circle>
+                        </svg>
+                    </button>
+                </td>
+            `;
+            tableBody.appendChild(row);
+        });
+    }
+
+    // Initialize the table
+    renderDocumentsTable();
+
+    // Handle checkbox-all click
+    const checkboxAll = document.querySelector('.checkbox-all');
+    checkboxAll.addEventListener('change', function() {
+        const checkboxes = document.querySelectorAll('.checkbox-row');
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = checkboxAll.checked;
+        });
+    });
+
+    // Handle search input
+    const searchInput = document.querySelector('.search-input');
+    searchInput.addEventListener('input', function(e) {
+        const searchTerm = e.target.value.toLowerCase();
+        const filteredDocuments = documents.filter(doc => 
+            doc.referenceNumber.toLowerCase().includes(searchTerm) ||
+            doc.subject.toLowerCase().includes(searchTerm) ||
+            doc.memoTitle.toLowerCase().includes(searchTerm)
+        );
+        
+        // Re-render table with filtered results
+        const tableBody = document.getElementById('documents-table-body');
+        tableBody.innerHTML = '';
+        filteredDocuments.forEach(doc => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>
+                    <input type="checkbox" class="checkbox-row">
+                </td>
+                <td>${doc.referenceNumber}</td>
+                <td>${doc.subject}</td>
+                <td>${doc.memoTitle}</td>
+                <td>${doc.from}</td>
+                <td>${doc.minutedTo}</td>
+                <td>${doc.date}</td>
+                <td>
+                    <span class="badge badge-${doc.status.toLowerCase()}">${doc.status}</span>
+                </td>
+                <td>
+                    <span class="badge badge-${doc.priority.toLowerCase()}">${doc.priority}</span>
+                </td>
+                <td>
+                    <button class="actions-button">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="1"></circle>
+                            <circle cx="12" cy="5" r="1"></circle>
+                            <circle cx="12" cy="19" r="1"></circle>
+                        </svg>
+                    </button>
+                </td>
+            `;
+            tableBody.appendChild(row);
+        });
+    });
+});
+    </script>
+</body>
+
+</html>
