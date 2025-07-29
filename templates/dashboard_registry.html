@@ -17,37 +17,10 @@
 
         <!-- Main Content -->
         <div class="main-content">
-            <!-- Header -->
-            <div class="header">
-                <div class="search-container">
-                    <i class="lucide-search"></i>
-                    <input type="text" placeholder="Search for anything..." />
-                </div>
 
-                <div class="header-actions">
-                    <button class="header-icon-button">
-                        <i class="lucide-calendar"></i>
-                    </button>
-                    <button class="header-icon-button">
-                        <i class="lucide-message-square"></i>
-                    </button>
-                    <button class="header-icon-button">
-                        <i class="lucide-bell"></i>
-                    </button>
-
-                    <div class="user-profile">
-                        <div class="user-info">
-                            <span class="user-name">{{ office }}</span>
-                            <span class="user-role">{{ role }}</span>
-                        </div>
-                        <div class="user-avatar">
-                            <img src="https://ui-avatars.com/api/?name=Odegbami+Ahmed&background=9333EA&color=fff"
-                                alt="User" />
-                            <i class="lucide-chevron-down"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {% include "base.html" %}
+        <!-- Header -->
+            
 
             <!-- Welcome Banner -->
             <div class="banner">
@@ -58,8 +31,8 @@
                     <button class="check-now-btn">Check Now</button>
                 </div>
                 <div class="banner-image">
-                    <img src="{{ url_for('static', filename='images/welcome banner picture.png') }}"
-                        alt="Professional in suit">
+                    <!-- <img src="{{ url_for('static', filename='images/welcome banner picture.png') }}"
+                        alt="Professional in suit"> -->
                 </div>
             </div>
 

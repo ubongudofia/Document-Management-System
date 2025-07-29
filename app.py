@@ -90,23 +90,25 @@ def registry_dashboard():
 
 @app.route("/documents_content")
 def documents_content():
-    return render_template("partials/documents_content.html")
-
-@app.route("/assigned_documents_content")
-def assigned_documents_content():
-    return render_template("partials/assigned_documents_content.html")
+    return render_template("documents_content.html")
 
 
+@app.route("/add_document")
+def add_document():
+    return render_template("add_document.html")
 
 
+@app.route("/all_document")
+def all_document():
+    return render_template("all_document.html")
 
+@app.route("/open_document")
+def open_document():
+    return render_template("open_document.html")
 
-
-
-
-
-
-
+@app.route("/assigned_documents")
+def assigned_documents():
+    return render_template("assigned_documents.html")
 
 
 

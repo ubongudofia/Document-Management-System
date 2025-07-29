@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Director Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+    <style>
+        .main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: #f5f5f5;
+        }
+
+        .topbar {
+            padding: 20px;
+            background: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .content {
+            display: flex;
+            padding: 20px;
+            gap: 20px;
+        }
+
+        .form-section {
+            flex: 1;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .form-section h3 {
+            margin-top: 0;
+        }
+
+        .form-section form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-section label {
+            margin: 10px 0 5px;
+        }
+
+        .form-section input,
+        .form-section select {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .buttons {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            padding: 10px 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        button.forward {
+            background: green;
+            color: white;
+        }
+
+        .document-preview {
+            flex: 1;
+            background: #fff;
+            border-radius: 8px;
+            padding: 10px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .document-preview iframe {
+            flex: 1;
+            width: 100%;
+            border: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dashboard">
+
+        {% include "sidebar.html" %}
+        <!-- Sidebar -->
+
+        <!-- Main Content -->
+        <div class="main-content">
+
+            {% include "base.html" %}
+            <!-- Header -->
+             
+            <!-- Dashboard Content -->
+            <div class="dashboard-content">
+                <main class="main">
+                    <header class="topbar">
+                        <div class="title">REQUEST FOR DECORATION OF ARMY OFFICERS</div>
+                        <div class="doc-buttons">
+                            <button onclick="openFullscreen()">Fullscreen</button>
+                            <button onclick="downloadDoc()">Download</button>
+                        </div>
+                    </header>
+
+                    <section class="content">
+                        <div class="form-section">
+                            <h3>Document Information</h3>
+                            <form>
+                                <label>Memo Title</label>
+                                <input type="text" value="REQUEST FOR DECORATION OF ARMY OFFICERS" readonly />
+
+                                <label>Reference</label>
+                                <input type="text" value="DSA/J6/DCS/15/A" readonly />
+
+                                <label>Subject</label>
+                                <input type="text" value="NA MATTERS" readonly />
+
+                                <label>Forward To</label>
+                                <select disabled>
+                                    <option selected>Director</option>
+                                </select>
+
+                                <label>From</label>
+                                <input type="text" value="DOA" readonly />
+
+                                <label>Priority</label>
+                                <input type="text" value="High" readonly />
+
+                                <label>Comment/Remark</label>
+                                <input type="text" value="Letter regarding NA Matters" readonly />
+
+                                <div class="buttons">
+                                    <button type="button">Edit</button>
+                                    <button type="submit" class="forward">Forward</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="document-preview">
+                            <iframe id="docViewer"
+                                src="{{ url_for('static', filename='doc folder/MESS MEETING - RESTRICTED.pdf') }}"
+                                type="application/pdf" frameborder="0">
+                            </iframe>
+                        </div>
+
+                    </section>
+                </main>
+            </div>
+        </div>
+    </div>
+    <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
+    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Development version -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+    <!-- Production version -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+
+    <script>
+        function openFullscreen() {
+            const pdfUrl = "{{ url_for('static', filename='doc folder/MESS MEETING - RESTRICTED.pdf') }}";
+            window.open(pdfUrl, '_blank');
+        }
+
+        function downloadPDF() {
+            const link = document.createElement("a");
+            link.href = "{{ url_for('static', filename='doc folder/MESS MEETING - RESTRICTED.pdf') }}";
+            link.download = "Request_Document.pdf";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+    </script>
+</body>
+
+</html>

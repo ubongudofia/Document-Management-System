@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registry Documents</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .search-box input {
+            width: 300px;
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        .add-button {
+            background: #002b7f;
+            color: white;
+            padding: 10px 14px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th,
+        td {
+            padding: 14px 12px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background: #f3f4f6;
+            font-weight: 600;
+        }
+
+        .badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            display: inline-block;
+            color: white;
+        }
+
+        .badge.pending {
+            background: #f59e0b;
+        }
+
+        .badge.reviewed {
+            background: #10b981;
+        }
+
+        .badge.low {
+            background: #059669;
+        }
+
+        .badge.medium {
+            background: #eab308;
+        }
+
+        .badge.high {
+            background: #dc2626;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin-top: 5px;
+            gap: 10px;
+            background-color: #fff;
+            width: auto;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .pagination button {
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .pagination .active-page {
+            background: #059669;
+            color: white;
+            border: none;
+        }
+
+
+        /* DOCUMENT HEADER */
+        .banner-document {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            flex-direction: row;
+            gap: 1rem;
+        }
+
+        .header-text h2 {
+            color: #0d1b45;
+            font-size: 1.8rem;
+        }
+
+        .actions {
+            display: flex;
+            gap: 1rem;
+            background-color: #f9f9fa;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .search-bar {
+            position: relative;
+            flex: 1;
+            max-width: 400px;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 0.6rem 2.2rem;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        .search-bar .icon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+        }
+
+        .filter-btn,
+        .add-doc-btn {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 0.6rem 1rem;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: background 0.3s ease;
+        }
+
+        .filter-btn:hover {
+            background-color: #eaeaea;
+        }
+
+        .add-doc-btn {
+            background-color: #0d1b45;
+            color: #fff;
+            border: none;
+        }
+
+        .add-doc-btn:hover {
+            background-color: #0a1431;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dashboard">
+
+        {% include "sidebar.html" %}
+        <!-- Sidebar -->
+
+        <!-- Main Content -->
+        <div class="main-content">
+
+            {% include "base.html" %}
+            <!-- Header -->
+
+
+            <!-- Welcome Banner -->
+            <div class="banner-header">
+                <div class="banner-document">
+                    <div class="header-text">
+                        <h2>Assigned Document</h2>
+                    </div>
+                    <!-- <div class="header-add-button">
+                        <button class="add-doc-btn">
+                            <i class="icon">+</i> Add Document
+                        </button>
+                    </div> -->
+                </div>
+
+                <div class="actions">
+                    <div class="search-bar">
+                        <i class="icon">🔍</i>
+                        <input type="text" placeholder="Search all Document" id="searchInput" />
+                    </div>
+                    <button class="filter-btn">
+                        <i class="icon">🧊</i> Filter
+                    </button>
+                </div>
+            </div>
+
+            <!-- Dashboard Content -->
+            <div class="dashboard-content">
+                <!-- Documents Table -->
+                <div class="documents-table-container">
+                    <div class="table-container">
+                        <div class="table-header">
+                            Recently Assigned Document
+                        </div>
+                        <div class="table-responsive">
+                            <table class="documents-table">
+                                <thead style="font-weight: bold;">
+                                    <tr>
+                                        <th><input type="checkbox" /></th>
+                                        <th>Reference Number</th>
+                                        <th>Subject</th>
+                                        <th>Memo Title</th>
+                                        <th>From</th>
+                                        <th>Assigned To</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                        <th>Priority</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="documents-table-body">
+                                    <tr>
+                                        <td><input type="checkbox" /></td>
+                                        <td>DSA/J6/DCS/11/1/A</td>
+                                        <td>NA MATTERS</td>
+                                        <td>REQUEST FOR DECORATION OF ARMY OFFICERS</td>
+                                        <td>DOA</td>
+                                        <td>Director</td>
+                                        <td>10-04-2025 | 10:30</td>
+                                        <td><span style="color: #fff;" class="badge pending">Pending</span></td>
+                                        <td><span style="color: #fff;" class="badge high">High</span></td>
+                                        <td>⋮</td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" /></td>
+                                        <td>DSA/J6/DCS/11/2/A</td>
+                                        <td>NN MATTERS</td>
+                                        <td>REQUEST FOR DECORATION OF NAVY OFFICERS</td>
+                                        <td>DOA</td>
+                                        <td>Nil</td>
+                                        <td>10-04-2025 | 10:30</td>
+                                        <td><span style="color: #fff;" class="badge reviewed">Reviewed</span></td>
+                                        <td><span style="color: #fff;" class="badge medium">Medium</span></td>
+                                        <td>⋮</td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" /></td>
+                                        <td>DSA/J6/DCS/11/3/A</td>
+                                        <td>NAF MATTERS</td>
+                                        <td>REQUEST FOR DECORATION OF AIR FORCE OFFICERS</td>
+                                        <td>DOA</td>
+                                        <td>Nil</td>
+                                        <td>10-04-2025 | 10:30</td>
+                                        <td><span style="color: #fff;" class="badge pending">Pending</span></td>
+                                        <td><span style="color: #fff;" class="badge low">Low</span></td>
+                                        <td>⋮</td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" /></td>
+                                        <td>DSA/J6/DCS/11/3/A</td>
+                                        <td>NAF MATTERS</td>
+                                        <td>REQUEST FOR DECORATION OF AIR FORCE OFFICERS</td>
+                                        <td>DOA</td>
+                                        <td>DD. ComSat</td>
+                                        <td>10-04-2025 | 10:30</td>
+                                        <td><span style="color: #fff;" class="badge pending">Pending</span></td>
+                                        <td><span style="color: #fff;" class="badge low">Low</span></td>
+                                        <td>⋮</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pagination">
+                    <button>&lt; Prev</button>
+                    <button class="active-page">Next</button>
+                    <span>Page: <input type="number" value="1" min="1" style="width: 40px" /> of 100</span>
+                    <select>
+                        <option>10</option>
+                        <option>20</option>
+                        <option>50</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
+    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Development version -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+    <!-- Production version -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+    <script>
+        document.getElementById("searchInput").addEventListener("input", (e) => {
+            console.log("Searching for:", e.target.value);
+        });
+
+        document.querySelector(".filter-btn").addEventListener("click", () => {
+            alert("Filter options would pop up here.");
+        });
+
+        document.querySelector(".add-doc-btn").addEventListener("click", () => {
+            alert("Navigate to Add Document page.");
+        });
+
+    </script>
+</body>
+
+</html>
